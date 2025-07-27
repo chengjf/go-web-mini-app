@@ -12,13 +12,20 @@ class NewsAPI {
     bool cacheDisk = false,
   }) async {
     var response = await HttpUtil().get(
-      '/news',
+      '/log/operation/list',
       queryParameters: params?.toJson(),
       refresh: refresh,
       cacheDisk: cacheDisk,
       cacheKey: STORAGE_INDEX_NEWS_CACHE_KEY,
     );
-    return NewsPageListResponseEntity.fromJson(response);
+    try {
+      var data = ApiResponse<NewsPageListResponseEntity>.fromJson(
+          response, (json) => NewsPageListResponseEntity.fromJson(json));
+      return data.data!;
+    } catch (e) {
+      print("fetch list error $e");
+    }
+    return NewsPageListResponseEntity();
   }
 
   /// 推荐

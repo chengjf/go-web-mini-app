@@ -37,7 +37,7 @@ Widget newsListItem(NewsItem item) {
               Container(
                 margin: EdgeInsets.all(0),
                 child: Text(
-                  item.author ?? "",
+                  item.id ?? "",
                   style: TextStyle(
                     fontFamily: 'Avenir',
                     fontWeight: FontWeight.normal,

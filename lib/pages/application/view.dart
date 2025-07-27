@@ -37,7 +37,7 @@ class ApplicationPage extends GetView<ApplicationController> {
     return PageView(
       physics: NeverScrollableScrollPhysics(),
       children: <Widget>[
-        MainPage(),
+        Text('MainPage'),
         CategoryPage(),
         Text('BookmarksPage'),
         Text('AccountPage'),

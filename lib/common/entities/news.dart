@@ -44,14 +44,14 @@ class NewsPageListResponseEntity {
 
   factory NewsPageListResponseEntity.fromJson(Map<String, dynamic> json) =>
       NewsPageListResponseEntity(
-        counts: json["counts"],
+        counts: json["total"],
         pagesize: json["pagesize"],
         pages: json["pages"],
         page: json["page"],
-        items: json["items"] == null
+        items: json["logs"] == null
             ? []
             : List<NewsItem>.from(
-                json["items"].map((x) => NewsItem.fromJson(x))),
+                json["logs"].map((x) => NewsItem.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -85,12 +85,12 @@ class NewsItem {
   });
 
   factory NewsItem.fromJson(Map<String, dynamic> json) => NewsItem(
-        id: json["id"],
-        title: json["title"],
-        category: json["category"],
+        id: json["ID"].toString(),
+        title: json["username"],
+        category: json["desc"],
         thumbnail: json["thumbnail"],
         author: json["author"],
-        addtime: DateTime.parse(json["addtime"]),
+        addtime: DateTime.parse(json["startTime"]),
         url: json["url"],
       );
 

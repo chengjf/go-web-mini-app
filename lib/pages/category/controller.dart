@@ -51,7 +51,7 @@ class CategoryController extends GetxController {
     var result = await NewsAPI.newsPageList(
       params: NewsPageListRequestEntity(
         categoryCode: categoryCode,
-        pageNum: curPage + 1,
+        pageNum: isRefresh ? 1 : curPage + 1,
         pageSize: pageSize,
       ),
     );

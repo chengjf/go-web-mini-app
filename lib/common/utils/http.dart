@@ -62,7 +62,12 @@ class HttpUtil {
     // Cookie管理
     CookieJar cookieJar = CookieJar();
     dio.interceptors.add(CookieManager(cookieJar));
-
+    // 添加日志
+    dio.interceptors.add(LogInterceptor(
+        request: true,
+        responseBody: true,
+        requestHeader: true,
+        responseHeader: true));
     // 添加拦截器
     dio.interceptors.add(InterceptorsWrapper(
       onRequest: (options, handler) {
@@ -115,6 +120,7 @@ class HttpUtil {
 
   // 错误信息
   ErrorEntity createErrorEntity(DioError error) {
+    print("createErrorEntity ${error}");
     switch (error.type) {
       case DioErrorType.cancel:
         return ErrorEntity(code: -1, message: "请求取消");
@@ -124,8 +130,6 @@ class HttpUtil {
         return ErrorEntity(code: -1, message: "请求超时");
       case DioErrorType.receiveTimeout:
         return ErrorEntity(code: -1, message: "响应超时");
-      case DioErrorType.cancel:
-        return ErrorEntity(code: -1, message: "请求取消");
       case DioErrorType.response:
         {
           try {
@@ -133,11 +137,13 @@ class HttpUtil {
                 error.response != null ? error.response!.statusCode! : -1;
             // String errMsg = error.response.statusMessage;
             // return ErrorEntity(code: errCode, message: errMsg);
+            final dynamic data = error.response!.data;
+            String msg = data["message"].toString();
             switch (errCode) {
               case 400:
                 return ErrorEntity(code: errCode, message: "请求语法错误");
               case 401:
-                return ErrorEntity(code: errCode, message: "没有权限");
+                return ErrorEntity(code: errCode, message: msg);
               case 403:
                 return ErrorEntity(code: errCode, message: "服务器拒绝执行");
               case 404:

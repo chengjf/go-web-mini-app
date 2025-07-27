@@ -89,9 +89,9 @@ class SignInPage extends GetView<SignInController> {
         children: [
           // email input
           inputTextEdit(
-            controller: controller.emailController,
-            keyboardType: TextInputType.emailAddress,
-            hintText: "Email",
+            controller: controller.usernameController,
+            keyboardType: TextInputType.name,
+            hintText: "Name",
             marginTop: 0,
             // autofocus: true,
           ),
@@ -107,44 +107,32 @@ class SignInPage extends GetView<SignInController> {
           Container(
             height: 44.h,
             margin: EdgeInsets.only(top: 15.h),
-            child: Row(
-              children: [
-                // 注册
-                btnFlatButtonWidget(
-                  onPressed: controller.handleNavSignUp,
-                  gbColor: AppColors.thirdElement,
-                  title: "Sign up",
-                ),
-                Spacer(),
-                // 登录
-                btnFlatButtonWidget(
-                  onPressed: controller.handleSignIn,
-                  gbColor: AppColors.primaryElement,
-                  title: "Sign in",
-                ),
-              ],
+            child: btnFlatButtonWidget(
+              onPressed: controller.handleSignIn,
+              gbColor: AppColors.primaryElement,
+              title: "Sign in",
             ),
           ),
           // Spacer(),
 
           // Fogot password
-          Padding(
-            padding: EdgeInsets.only(top: 8.0),
-            child: TextButton(
-              onPressed: controller.handleFogotPassword,
-              child: Text(
-                "Fogot password?",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: AppColors.secondaryElementText,
-                  fontFamily: "Avenir",
-                  fontWeight: FontWeight.w400,
-                  fontSize: 16.sp,
-                  height: 1, // 设置下行高，否则字体下沉
-                ),
-              ),
-            ),
-          ),
+          // Padding(
+          //   padding: EdgeInsets.only(top: 8.0),
+          //   child: TextButton(
+          //     onPressed: controller.handleFogotPassword,
+          //     child: Text(
+          //       "Fogot password?",
+          //       textAlign: TextAlign.center,
+          //       style: TextStyle(
+          //         color: AppColors.secondaryElementText,
+          //         fontFamily: "Avenir",
+          //         fontWeight: FontWeight.w400,
+          //         fontSize: 16.sp,
+          //         height: 1, // 设置下行高，否则字体下沉
+          //       ),
+          //     ),
+          //   ),
+          // ),
         ],
       ),
     );
@@ -223,9 +211,9 @@ class SignInPage extends GetView<SignInController> {
           children: <Widget>[
             _buildLogo(),
             _buildInputForm(),
-            Spacer(),
-            _buildThirdPartyLogin(),
-            _buildSignupButton(),
+            // Spacer(),
+            // _buildThirdPartyLogin(),
+            // _buildSignupButton(),
           ],
         ),
       ),

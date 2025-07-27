@@ -14,42 +14,49 @@ class UserStore extends GetxController {
   // 令牌 token
   String token = '';
   // 用户 profile
-  final _profile = UserLoginResponseEntity().obs;
+  // final _profile = UserLoginResponseEntity().obs;
 
   bool get isLogin => _isLogin.value;
-  UserLoginResponseEntity get profile => _profile.value;
+  // UserLoginResponseEntity get profile => _profile.value;
   bool get hasToken => token.isNotEmpty;
 
   @override
   void onInit() {
     super.onInit();
     token = StorageService.to.getString(STORAGE_USER_TOKEN_KEY);
-    var profileOffline = StorageService.to.getString(STORAGE_USER_PROFILE_KEY);
-    if (profileOffline.isNotEmpty) {
-      _profile(UserLoginResponseEntity.fromJson(jsonDecode(profileOffline)));
-    }
+    // var profileOffline = StorageService.to.getString(STORAGE_USER_PROFILE_KEY);
+    // if (profileOffline.isNotEmpty) {
+    //   _profile(UserLoginResponseEntity.fromJson(jsonDecode(profileOffline)));
+    // }
   }
 
   // 保存 token
   Future<void> setToken(String value) async {
-    await StorageService.to.setString(STORAGE_USER_TOKEN_KEY, value);
-    token = value;
+    try {
+      print("setToken $value");
+      _isLogin.value = true;
+      await StorageService.to.setString(STORAGE_USER_TOKEN_KEY, value);
+      token = value;
+      print("setToken end $isLogin");
+    } catch (e) {
+      print("$e");
+    }
   }
 
   // 获取 profile
   Future<void> getProfile() async {
     if (token.isEmpty) return;
     var result = await UserAPI.profile();
-    _profile(result);
+    // _profile(result);
     _isLogin.value = true;
     StorageService.to.setString(STORAGE_USER_PROFILE_KEY, jsonEncode(result));
   }
 
   // 保存 profile
-  Future<void> saveProfile(UserLoginResponseEntity profile) async {
-    _isLogin.value = true;
-    StorageService.to.setString(STORAGE_USER_PROFILE_KEY, jsonEncode(profile));
-  }
+  // Future<void> saveProfile(UserLoginResponseEntity profile) async {
+  //   _isLogin.value = true;
+  //   StorageService.to.setString(STORAGE_USER_PROFILE_KEY, jsonEncode(profile));
+  // }
 
   // 注销
   Future<void> onLogout() async {

@@ -1,4 +1,5 @@
 import 'package:go_web_mini_app/common/entities/entities.dart';
+import 'package:go_web_mini_app/common/entities/public_key.dart';
 import 'package:go_web_mini_app/common/utils/utils.dart';
 
 /// 用户
@@ -8,10 +9,12 @@ class UserAPI {
     UserLoginRequestEntity? params,
   }) async {
     var response = await HttpUtil().post(
-      '/user/login',
+      '/base/login',
       data: params?.toJson(),
     );
-    return UserLoginResponseEntity.fromJson(response);
+     var data = ApiResponse<UserLoginResponseEntity>.fromJson(
+        response, (json) => UserLoginResponseEntity.fromJson(json));
+    return data.data!;
   }
 
   /// 注册
@@ -38,5 +41,12 @@ class UserAPI {
     return await HttpUtil().post(
       '/user/logout',
     );
+  }
+
+  static Future<String> getPublicKey() async {
+    var response = await HttpUtil().get("/base/publicKey");
+    var data = ApiResponse<PublicKey>.fromJson(
+        response, (json) => PublicKey.fromJson(json));
+    return data.data!.publicKey!;
   }
 }

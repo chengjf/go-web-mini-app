@@ -21,34 +21,36 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ScreenUtilInit(
       designSize: Size(375, 812),
-      builder: () => RefreshConfiguration(
-        headerBuilder: () => ClassicHeader(),
-        footerBuilder: () => ClassicFooter(),
-        hideFooterWhenNotFull: true,
-        headerTriggerDistance: 80,
-        maxOverScrollExtent: 100,
-        footerTriggerDistance: 150,
-        child: GetMaterialApp(
-          title: 'News',
-          theme: AppTheme.light,
-          debugShowCheckedModeBanner: false,
-          initialRoute: AppPages.INITIAL,
-          getPages: AppPages.routes,
-          builder: EasyLoading.init(),
-          translations: TranslationService(),
-          navigatorObservers: [AppPages.observer],
-          localizationsDelegates: [
-            GlobalMaterialLocalizations.delegate,
-            GlobalWidgetsLocalizations.delegate,
-            GlobalCupertinoLocalizations.delegate,
-          ],
-          supportedLocales: ConfigStore.to.languages,
-          locale: ConfigStore.to.locale,
-          fallbackLocale: Locale('en', 'US'),
-          enableLog: true,
-          logWriterCallback: Logger.write,
-        ),
-      ),
+      builder: (BuildContext context, Widget? child) {
+        return RefreshConfiguration(
+          headerBuilder: () => ClassicHeader(),
+          footerBuilder: () => ClassicFooter(),
+          hideFooterWhenNotFull: true,
+          headerTriggerDistance: 80,
+          maxOverScrollExtent: 100,
+          footerTriggerDistance: 150,
+          child: GetMaterialApp(
+            title: 'News',
+            theme: AppTheme.light,
+            debugShowCheckedModeBanner: false,
+            initialRoute: AppPages.INITIAL,
+            getPages: AppPages.routes,
+            builder: EasyLoading.init(),
+            translations: TranslationService(),
+            navigatorObservers: [AppPages.observer],
+            localizationsDelegates: [
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
+            supportedLocales: ConfigStore.to.languages,
+            locale: ConfigStore.to.locale,
+            fallbackLocale: Locale('en', 'US'),
+            enableLog: true,
+            logWriterCallback: Logger.write,
+          ),
+        );
+      },
     );
   }
 }
